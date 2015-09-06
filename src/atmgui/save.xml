@@ -1,0 +1,50 @@
+<bankaccount>
+	<accountnumber>12345</accountnumber>
+	<pin>1234</pin>
+	<balance>400.00</balance>
+	<transactions>
+		<transaction>
+			<bal>0.00</bal>
+			<date>1441316526518</date>
+</transaction>
+		<transaction>
+			<bal>200.00</bal>
+			<date>1441316526518</date>
+</transaction>
+		<transaction>
+			<bal>400.00</bal>
+			<date>1441541396719</date>
+</transaction>
+	</transactions>
+	<names>
+		<name>
+			<firstname>Nathan</firstname>
+			<lastname>Bleier</lastname>
+			<midname>Lewis</midname>
+			<title>Mr.</title>
+		</name>
+	</names>
+</bankaccount>
+<bankaccount>
+	<accountnumber>12346</accountnumber>
+	<pin>1234</pin>
+	<balance>200.00</balance>
+	<transactions>
+		<transaction>
+			<bal>0.00</bal>
+			<date>1441316526518</date>
+</transaction>
+		<transaction>
+			<bal>200.00</bal>
+			<date>1441316526518</date>
+</transaction>
+	</transactions>
+	<names>
+		<name>
+			<firstname>Robert</firstname>
+			<lastname>Bojangles</lastname>
+			<midname>Dwight</midname>
+			<title>1</title>
+		</name>
+	</names>
+</bankaccount>
