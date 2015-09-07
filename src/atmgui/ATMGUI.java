@@ -67,18 +67,23 @@ public class ATMGUI extends Application {
         hbBtn.getChildren().add(signInBtn);
         grid.add(hbBtn, 1, 4);
         final Text actionTarget = new Text();
-            grid.add(actionTarget, 1, 6);
+            grid.add(actionTarget, 1, 6, 3, 1);
             
         signInBtn.setOnAction(new EventHandler<ActionEvent>() {
             
             @Override
             public void handle(ActionEvent e) {
-                try{
-                    String numString = numTextField.getCharacters().toString();
-                    long num = Long.parseLong(numString);
+                String acct = numTextField.getCharacters().toString();
+                String pinS = pinBox.getCharacters().toString();
+                
+                if ( pinS.equals(atm.getAdminPassword()) && acct.toLowerCase().equals("admin") ) {
+                    adminATM(primaryStage, atm);
+                }
+                else {
+                    try{
+                    long num = Long.parseLong(acct);
                     numTextField.clear();
-                    String pinString = pinBox.getCharacters().toString();
-                    int pin = Integer.parseInt(pinString);
+                    int pin = Integer.parseInt(pinS);
                     pinBox.clear();
                     
                     boolean success = atm.login(num, pin);
@@ -89,16 +94,158 @@ public class ATMGUI extends Application {
                         actionTarget.setText("Logged in!");
                         mainATM(atm.getAccount(), primaryStage, atm);
                     }
+                    }
+                    catch (IllegalArgumentException f) {
+                        actionTarget.setText("Account not found");
+                    }
+                }
+                
+            }
+        });
+        
+        Scene scene = new Scene(grid, 750, 375);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+    
+    public void adminATM(final Stage stage, final ATM atm) {
+        stage.setTitle("Add an Account");
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setAlignment(Pos.CENTER);
+        
+        
+        Text header = new Text("Enter Account Information:");
+        header.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        
+        grid.add(header, 0, 0, 3, 1);
+        
+        Date now = new Date();
+        Text day = new Text(now.toString().substring(0,10));
+        GridPane dGrid = new GridPane();
+        dGrid.setHgap(0);
+        dGrid.setVgap(0);
+        dGrid.setAlignment(Pos.CENTER_LEFT);
+        
+        grid.add(day, 4, 0);
+        Text asterisk = new Text("*");
+        asterisk.setFill(Color.FIREBRICK);
+        dGrid.add(asterisk, 0, 0);
+        Text asterText = new Text(" indicates required field");
+        dGrid.add(asterText, 1, 0);
+        
+        grid.add(dGrid, 4, 1);
+        
+        Text acctNumber = new Text("Account Number:");
+        final TextField acctNumField = new TextField();
+        Text asterNum = new Text("*");
+        asterNum.setFill(Color.FIREBRICK);
+        
+        grid.add(acctNumber, 0, 1);
+        grid.add(acctNumField, 1, 1);
+        grid.add(asterNum, 2, 1);
+        
+        Text pinText = new Text("PIN:");
+        final TextField pinField = new TextField();
+        Text asterPin = new Text("*");
+        asterPin.setFill(Color.FIREBRICK);
+        
+        
+        
+        grid.add(pinText, 0, 2);
+        grid.add(pinField, 1, 2);
+        grid.add(asterPin, 2, 2);
+        
+        Text titleText = new Text("Title:");
+        Text fNameText = new Text("First Name:");
+        Text mNameText = new Text("Middle Name:");
+        Text lNameText = new Text("Last Name:");
+        Text asteriskfName = new Text("*");
+        asteriskfName.setFill(Color.FIREBRICK);
+        Text asterisklName = new Text("*");
+        asterisklName.setFill(Color.FIREBRICK);
+        final TextField titleField = new TextField();
+        final TextField fNameField = new TextField();
+        final TextField mNameField = new TextField();
+        final TextField lNameField = new TextField();
+        
+        grid.add(titleText, 0, 3);
+        grid.add(titleField, 1, 3);
+        grid.add(fNameText, 0, 4);
+        grid.add(fNameField, 1, 4);
+        grid.add(asteriskfName, 2, 4);
+        grid.add(mNameText, 0, 5);
+        grid.add(mNameField, 1, 5);
+        grid.add(lNameText, 0, 6);
+        grid.add(lNameField, 1, 6);
+        grid.add(asterisklName, 2, 6);
+        
+        Text createText = new Text("Create Account");
+        Button create = new Button("OK");
+        HBox hCreate = new HBox();
+        hCreate.setAlignment(Pos.BOTTOM_RIGHT);
+        hCreate.getChildren().add(create);
+        final Text warningText = new Text();
+        
+        
+        grid.add(warningText, 1, 8, 4, 1);
+        grid.add(createText, 0, 7);
+        grid.add(hCreate, 1, 7);
+        
+        Button saveBtn = new Button("Done");
+        HBox hSave = new HBox();
+        hSave.setAlignment(Pos.BOTTOM_LEFT);
+        hSave.getChildren().add(saveBtn);
+        
+        grid.add(hSave, 0, 8);
+        
+        saveBtn.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent e) {
+                atm.saveToXML();
+                start(stage);
+            }
+        });
+
+        create.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent e) {
+                try {
+                    String firstS = fNameField.getCharacters().toString().trim();
+                    String midS = mNameField.getCharacters().toString().trim();
+                    String lastS = lNameField.getCharacters().toString().trim();
+                    String titleS = titleField.getCharacters().toString().trim();
+                    long actNumber = Long.parseLong(acctNumField.getCharacters().toString());
+                    int pinNumber = Integer.parseInt(pinField.getCharacters().toString());
+                    if ( !firstS.equals("") && !lastS.equals("") ) {
+                        PersonName newPerson = new PersonName(firstS, lastS, midS, titleS);
+                        BankAccount newBA = new BankAccount(actNumber, pinNumber, 0, newPerson);
+                        atm.addAccount(newBA);
+                        warningText.setText("Account added");
+                        warningText.setFill(Color.GREEN);
+                    }
+                    else {
+                        warningText.setText("Please fill in all required fields");
+                        warningText.setFill(Color.FIREBRICK);
+                    }
+                }
+                catch (NumberFormatException f) {
+                    warningText.setText("Please enter numbers for Account Number and PIN");
+                    warningText.setFill(Color.FIREBRICK);
                 }
                 catch (IllegalArgumentException f) {
-                    actionTarget.setText("Account not found");
+                    warningText.setText("Account number already in use.");
+                    warningText.setFill(Color.FIREBRICK);
                 }
             }
         });
         
-        Scene scene = new Scene(grid, 750, 275);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        Scene scene = new Scene(grid, 750, 375);
+        stage.setScene(scene);
+        stage.show();
     }
     
     public void mainATM(final BankAccount ba, final Stage atmStage, final ATM atm) {
@@ -146,8 +293,8 @@ public class ATMGUI extends Application {
         grid.add(hdeposit, 0, 2);
         grid.add(depositField, 1, 2);
         
-        grid.add(with, 0, 4);
-        grid.add(hgetWith, 1, 4);
+        //grid.add(with, 0, 4);
+        //grid.add(hgetWith, 1, 4);
         
         Button balBtn = new Button("View Balance");
         HBox hbalBtn = new HBox();
@@ -162,10 +309,10 @@ public class ATMGUI extends Application {
         hexitBtn.setAlignment(Pos.CENTER_LEFT);
         
         grid.add(hexitBtn, 1, 5);
-        
+       
         
         final Text actionTarget = new Text();
-            grid.add(actionTarget, 1, 8);
+            grid.add(actionTarget, 1, 8, 3, 1);
             
         exitBtn.setOnAction(new EventHandler<ActionEvent>() {
            
@@ -226,7 +373,7 @@ public class ATMGUI extends Application {
         });
         
         
-        Scene transScene = new Scene(grid, 750, 275);
+        Scene transScene = new Scene(grid, 750, 375);
         atmStage.setScene(transScene);
         atmStage.show(); 
     }

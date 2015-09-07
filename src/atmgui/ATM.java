@@ -24,14 +24,26 @@ public class ATM {
     private ArrayList<BankAccount> accounts = new ArrayList<>();
     private String filePath; // path is src\\BankTeller\\save.xml
     private int actIndex = -1;
+    private static String admin = "admin";
+    private String adminPassword;
     
     ATM(String path) {
         filePath = path;
+        adminPassword = "password";
     }
     
     ATM(String path, ArrayList<BankAccount> accounts) {
         filePath = path;
         this.accounts = accounts;
+        adminPassword = "password";
+    }
+    
+    public void setAdminPassword(String pass) {
+        adminPassword = pass;
+    }
+    
+    public String getAdminPassword() {
+        return this.adminPassword;
     }
     
     public String getFilePath() {
