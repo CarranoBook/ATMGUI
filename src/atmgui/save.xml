@@ -63,7 +63,7 @@
 <bankaccount>
 	<accountnumber>12347</accountnumber>
 	<pin>4321</pin>
-	<balance>1000.00</balance>
+	<balance>54500.00</balance>
 	<transactions>
 		<transaction>
 			<bal>0.00</bal>
@@ -77,6 +77,14 @@
 			<bal>1000.00</bal>
 			<date>1441634006851</date>
 </transaction>
+		<transaction>
+			<bal>966.00</bal>
+			<date>1441643667327</date>
+</transaction>
+		<transaction>
+			<bal>54500.00</bal>
+			<date>1441643677422</date>
+</transaction>
 	</transactions>
 	<names>
 		<name>
@@ -84,6 +92,29 @@
 			<lastname>Carey</lastname>
 			<midname></midname>
 			<title>Ms.</title>
+		</name>
+	</names>
+</bankaccount>
+<bankaccount>
+	<accountnumber>5348028</accountnumber>
+	<pin>7783</pin>
+	<balance>0.00</balance>
+	<transactions>
+		<transaction>
+			<bal>0.00</bal>
+			<date>1441643764574</date>
+</transaction>
+		<transaction>
+			<bal>0.00</bal>
+			<date>1441643764574</date>
+</transaction>
+	</transactions>
+	<names>
+		<name>
+			<firstname>Curious</firstname>
+			<lastname>George</lastname>
+			<midname></midname>
+			<title>Monkey</title>
 		</name>
 	</names>
 </bankaccount>

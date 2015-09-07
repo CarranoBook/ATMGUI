@@ -45,6 +45,7 @@ public class ATMGUI extends Application {
         grid.setPadding(new Insets(25,25,25,25));
         
         Text scenetitle = new Text("Welcome");
+        scenetitle.setId("scene-title");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
@@ -67,6 +68,7 @@ public class ATMGUI extends Application {
         hbBtn.getChildren().add(signInBtn);
         grid.add(hbBtn, 1, 4);
         final Text actionTarget = new Text();
+        actionTarget.setId("action-target");
             grid.add(actionTarget, 1, 6, 3, 1);
             
         signInBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -104,6 +106,7 @@ public class ATMGUI extends Application {
         });
         
         Scene scene = new Scene(grid, 750, 375);
+        scene.getStylesheets().add(ATMGUI.class.getResource("ATMCSS.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -117,12 +120,13 @@ public class ATMGUI extends Application {
         
         
         Text header = new Text("Enter Account Information:");
+        header.setId("admin-header");
         header.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         
-        grid.add(header, 0, 0, 3, 1);
+        grid.add(header, 0, 0, 2, 1);
         
         Date now = new Date();
-        Text day = new Text(now.toString().substring(0,10));
+        Label day = new Label(now.toString().substring(0,10));
         GridPane dGrid = new GridPane();
         dGrid.setHgap(0);
         dGrid.setVgap(0);
@@ -137,7 +141,7 @@ public class ATMGUI extends Application {
         
         grid.add(dGrid, 4, 1);
         
-        Text acctNumber = new Text("Account Number:");
+        Label acctNumber = new Label("Account Number:");
         final TextField acctNumField = new TextField();
         Text asterNum = new Text("*");
         asterNum.setFill(Color.FIREBRICK);
@@ -146,7 +150,7 @@ public class ATMGUI extends Application {
         grid.add(acctNumField, 1, 1);
         grid.add(asterNum, 2, 1);
         
-        Text pinText = new Text("PIN:");
+        Label pinText = new Label("PIN:");
         final TextField pinField = new TextField();
         Text asterPin = new Text("*");
         asterPin.setFill(Color.FIREBRICK);
@@ -157,10 +161,10 @@ public class ATMGUI extends Application {
         grid.add(pinField, 1, 2);
         grid.add(asterPin, 2, 2);
         
-        Text titleText = new Text("Title:");
-        Text fNameText = new Text("First Name:");
-        Text mNameText = new Text("Middle Name:");
-        Text lNameText = new Text("Last Name:");
+        Label titleText = new Label("Title:");
+        Label fNameText = new Label("First Name:");
+        Label mNameText = new Label("Middle Name:");
+        Label lNameText = new Label("Last Name:");
         Text asteriskfName = new Text("*");
         asteriskfName.setFill(Color.FIREBRICK);
         Text asterisklName = new Text("*");
@@ -181,12 +185,13 @@ public class ATMGUI extends Application {
         grid.add(lNameField, 1, 6);
         grid.add(asterisklName, 2, 6);
         
-        Text createText = new Text("Create Account");
-        Button create = new Button("OK");
+        Label createText = new Label("Create Account");
+        Button create = new Button("Create");
         HBox hCreate = new HBox();
-        hCreate.setAlignment(Pos.BOTTOM_RIGHT);
+        hCreate.setAlignment(Pos.BOTTOM_LEFT);
         hCreate.getChildren().add(create);
         final Text warningText = new Text();
+        warningText.setId("warningText");
         
         
         grid.add(warningText, 1, 8, 4, 1);
@@ -244,6 +249,7 @@ public class ATMGUI extends Application {
         });
         
         Scene scene = new Scene(grid, 750, 375);
+        scene.getStylesheets().add(ATMGUI.class.getResource("ATMCSS.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -262,14 +268,15 @@ public class ATMGUI extends Application {
         
         Text welcome = new Text("Welcome, " + user.getTitle() + " " + user.getLastName());
         welcome.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        welcome.setId("welcome");
         grid.add(welcome, 0, 0, 2, 1);
         
-        Text dtg = new Text();
+        Label dtg = new Label();
         Date now = new Date();
         dtg.setText(now.toString().substring(0, 10));
         grid.add(dtg, 2, 0);
         
-        Text with = new Text("Withdrawal History");
+        Label with = new Label("Withdrawal History");
         Button getWith = new Button("OK");
         HBox hgetWith = new HBox();
         hgetWith.getChildren().add(getWith);
@@ -374,6 +381,7 @@ public class ATMGUI extends Application {
         
         
         Scene transScene = new Scene(grid, 750, 375);
+        transScene.getStylesheets().add(ATMGUI.class.getResource("ATMCSS.css").toExternalForm());
         atmStage.setScene(transScene);
         atmStage.show(); 
     }
