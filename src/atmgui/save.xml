@@ -118,3 +118,30 @@
 		</name>
 	</names>
 </bankaccount>
+<bankaccount>
+	<accountnumber>8462</accountnumber>
+	<pin>1234</pin>
+	<balance>100000.00</balance>
+	<transactions>
+		<transaction>
+			<bal>0.00</bal>
+			<date>1442359287677</date>
+</transaction>
+		<transaction>
+			<bal>0.00</bal>
+			<date>1442359287677</date>
+</transaction>
+		<transaction>
+			<bal>100000.00</bal>
+			<date>1442359324087</date>
+</transaction>
+	</transactions>
+	<names>
+		<name>
+			<firstname>Scott</firstname>
+			<lastname>Kehr</lastname>
+			<midname></midname>
+			<title>Mr.</title>
+		</name>
+	</names>
+</bankaccount>
